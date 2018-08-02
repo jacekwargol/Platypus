@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MoonSharp": {
+      "commandName": "Project",
+      "commandLineArgs": "hello_moon.txt"
+    }
+  }
+}
