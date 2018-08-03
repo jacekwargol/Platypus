@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using static MoonSharp.TokenType;
 
 namespace MoonSharp {
@@ -64,6 +65,11 @@ namespace MoonSharp {
                     TryString();
                     break;
 
+                // TODO: match float starting with dot
+                case var num when new Regex(@"[0-9]").IsMatch(c.ToString()):
+                    TryNumber();
+                    break;
+
                 // Ignore whitespace
                 case '\r':
                 case '\t':
@@ -80,7 +86,24 @@ namespace MoonSharp {
             }
         }
 
-        
+        private void TryNumber() {
+            int dotCount = 0;
+            var floatRegex = new Regex(@"[0-9\.]");
+            while(!IsAtEnd() && floatRegex.IsMatch(source[current].ToString())) {
+                if(source[current] == '.') {
+                    dotCount++;
+                }
+
+                current++;
+            }
+
+            if(dotCount > 1) {
+                Moon.GenerateError(line, "Unexpected character.");
+                return;
+            }
+
+            AddToken(dotCount == 1 ? Float : Integer);
+        }
 
         private void AddToken(TokenType type, string lexame = null) {
             var lex = lexame ?? source.Substring(start, current - start);

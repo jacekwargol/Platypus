@@ -14,6 +14,6 @@ namespace MoonSharp {
         }
 
         public override string ToString() =>
-            lexeme + ": " + type;
+            "Line " + line + ": " +  lexeme + ": " + type;
     }
 }

@@ -10,7 +10,7 @@
         Less, Greater, LessEqual, GreaterEqual,
 
         // Literals
-        Integer, StringToken, Bool,
+        Integer, Float, StringToken, Bool,
 
         // Keywords
         And, Or, If, Else, Elif,
