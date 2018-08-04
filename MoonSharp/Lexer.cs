@@ -11,6 +11,23 @@ namespace MoonSharp {
         private int start, current;
         private int line = 1;
 
+        private static Dictionary<string, TokenType> keywords = new Dictionary<string, TokenType>() {
+            { "and", And},
+            { "or", Or },
+            { "if", If },
+            { "else", Else },
+            { "elif", Elif },
+            { "true", True },
+            { "false", False },
+            { "class", Class },
+            { "fun", Fun },
+            { "for", For },
+            { "this", This },
+            { "base", Base },
+            { "let", Let },
+            { "return", Return }
+        };
+
         public Lexer(string source) => this.source = source;
 
         public List<Token> Tokenize() {
@@ -70,6 +87,10 @@ namespace MoonSharp {
                     TryNumber();
                     break;
 
+                case var iden when new Regex(@"[a-zA-Z_]").IsMatch(c.ToString()):
+                    TryIdentifier();
+                    break;
+
                 // Ignore whitespace
                 case '\r':
                 case '\t':
@@ -84,6 +105,23 @@ namespace MoonSharp {
                     Moon.GenerateError(line, "Unexpected character.");
                     break;
             }
+        }
+
+        private void TryIdentifier() {
+            var idenRegex = new Regex(@"[a-zA-Z_\?0-9]");
+            while(!IsAtEnd() && idenRegex.IsMatch(source[current].ToString())) {
+                current++;
+            }
+
+            var lex = source.Substring(start, current - start);
+            foreach(var iden in keywords) {
+                if(lex == iden.Key) {
+                    AddToken(iden.Value, lex);
+                    return;
+                }
+            }
+
+            AddToken(Identifier, lex);
         }
 
         private void TryNumber() {
