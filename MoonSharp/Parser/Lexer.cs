@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using static MoonSharp.TokenType;
 
-namespace MoonSharp {
+namespace MoonSharp.Parser {
     class Lexer {
         private readonly string source;
         private readonly List<Token> tokens = new List<Token>();
