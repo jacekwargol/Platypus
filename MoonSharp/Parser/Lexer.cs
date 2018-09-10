@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using static MoonSharp.TokenType;
+using static MoonSharp.Parser.TokenType;
 
 namespace MoonSharp.Parser {
     class Lexer {

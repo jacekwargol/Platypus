@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MoonSharp {
+namespace MoonSharp.Parser {
     class Token {
         private readonly TokenType type;
         private readonly String lexeme;
