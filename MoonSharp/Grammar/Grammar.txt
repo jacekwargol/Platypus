@@ -1,11 +1,21 @@
-﻿expression =	literal | grouping | unary | binary | operator ;
+﻿// operators
+mult_op =			"*" | "/" ;
+add_op =			"+" | "-" ;
+unary_op =			"!" | "-" ;
+eq_op =				"==" | "!=" ;
+comp_op =			"<" | ">" | "<=" | ">=" ;
 
-literal =		INTEGER | FLOAT | STRING | "true" | "false" ;
-grouping =		"(" expression ")" ;
-unary =			("-" | "!") expression ;
-binary =		expression operator expression ;
-operator =		"." | "+" | "-" | "=" 
-				| "==" | "!=" | "<=" | ">="
-				| "<" | ">"
-;
+
+// expressions
+expression =		equality ;
+equality =			comparision (eq_op comparision)* ;
+comparision =		additive (comp_op additive)* ;
+additive =			multiplicative (add_op multiplicative)* ;
+multiplicative =	unary (mult_op unary)* ;
+unary =				primary | unary_op unary ;
+primary =			literal | grouping ;
+grouping =			"(" expression ")" ;
+literal =			INTEGER | FLOAT | STRING | "true" | "false" ;
+
+
 
