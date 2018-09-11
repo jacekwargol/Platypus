@@ -8,8 +8,8 @@ comp_op =			"<" | ">" | "<=" | ">=" ;
 
 // expressions
 expression =		equality ;
-equality =			comparision (eq_op comparision)* ;
-comparision =		additive (comp_op additive)* ;
+equality =			comparison (eq_op comparision)* ;
+comparison =		additive (comp_op additive)* ;
 additive =			multiplicative (add_op multiplicative)* ;
 multiplicative =	unary (mult_op unary)* ;
 unary =				primary | unary_op unary ;

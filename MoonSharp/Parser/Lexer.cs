@@ -167,7 +167,7 @@ namespace MoonSharp.Parser {
         private bool IsAtEnd() => current >= source.Length;
 
         private bool IsMatching(char expected) {
-            if(current >= source.Length) {
+            if(IsAtEnd()) {
                 return false;
             }
 
