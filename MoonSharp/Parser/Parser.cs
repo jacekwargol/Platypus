@@ -51,11 +51,17 @@ namespace MoonSharp.Parser {
 
         private Expr Grouping() {
             var expr = Expression();
-            //if(!IsMatching(RightParen)) {
-
-            //}
+            Consume(RightParen, "Missing ')' after expression.");
 
             return new Grouping(expr);
+        }
+
+        private Token Consume(TokenType token, string message) {
+            if(IsMatching(token)) {
+                return Advance();
+            }
+
+            throw new ParsingException(message);
         }
 
         private Expr Literal() {
@@ -83,12 +89,17 @@ namespace MoonSharp.Parser {
 
             foreach(var type in types) {
                 if(tokens[current].Type == type) {
-                    current++;
+                    Advance();
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private Token Advance() {
+            if(!IsAtEnd()) current++;
+            return Previous();
         }
 
         private Token Previous() {
