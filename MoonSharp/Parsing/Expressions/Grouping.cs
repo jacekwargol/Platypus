@@ -8,5 +8,5 @@ public Grouping(Expr epxr) {
 this.epxr = epxr;
 }
 
-public override void Accept(IExprVisitor visitor) => visitor.Visit(this);}
+public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}
 }

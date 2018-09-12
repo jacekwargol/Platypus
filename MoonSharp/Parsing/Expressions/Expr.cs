@@ -1,5 +1,5 @@
 ﻿namespace MoonSharp.Parsing.Expressions {
     abstract class Expr {
-        public abstract void Accept(IExprVisitor visitor);
+        public abstract T Accept<T>(IExprVisitor<T> visitor);
     }
 }

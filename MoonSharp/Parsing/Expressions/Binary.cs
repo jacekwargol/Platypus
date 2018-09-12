@@ -12,5 +12,5 @@ this.rightExpr = rightExpr;
 this.operator_ = operator_;
 }
 
-public override void Accept(IExprVisitor visitor) => visitor.Visit(this);}
+public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}
 }
