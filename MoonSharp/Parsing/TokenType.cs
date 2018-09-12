@@ -1,4 +1,4 @@
-﻿namespace MoonSharp.Parser {
+﻿namespace MoonSharp.Parsing {
     enum TokenType {
         // Single-character tokens
         LeftParen, RightParen, LeftBracket, RightBracket,

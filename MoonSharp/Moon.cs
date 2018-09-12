@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using MoonSharp.Parser;
+using MoonSharp.Parsing;
 
 namespace MoonSharp {
     class Moon {
@@ -60,6 +60,10 @@ namespace MoonSharp {
             foreach(var token in tokens) {
                 Console.WriteLine(token.ToString());
             }
+
+            var parser = new Parser(tokens);
+            var expr = parser.Parse();
+            Console.WriteLine(expr);
         }
 
         private static void ReportError(int line, string message) {

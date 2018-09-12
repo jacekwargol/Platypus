@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using static MoonSharp.Parser.TokenType;
+using static MoonSharp.Parsing.TokenType;
 
-namespace MoonSharp.Parser {
+namespace MoonSharp.Parsing {
     class Lexer {
         private readonly string source;
         private readonly List<Token> tokens = new List<Token>();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MoonSharp.Parser {
+namespace MoonSharp.Parsing {
     class ParsingException : Exception {
         public ParsingException() {
         }

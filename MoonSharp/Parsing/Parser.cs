@@ -1,14 +1,23 @@
-﻿using MoonSharp.Parser.Expressions;
+﻿using MoonSharp.Parsing.Expressions;
 using System;
 using System.Collections.Generic;
-using static MoonSharp.Parser.TokenType;
+using static MoonSharp.Parsing.TokenType;
 
-namespace MoonSharp.Parser {
+namespace MoonSharp.Parsing {
     class Parser {
-        private List<Token> tokens = new List<Token>();
+        private List<Token> tokens;
         private int current;
 
         public Parser(List<Token> tokens) => this.tokens = tokens;
+
+        public Expr Parse() {
+            try {
+                return Expression();
+            }
+            catch(ParsingException ex) {
+                return null;
+            }
+        }
 
 
         private delegate Expr exprMethod<out Expr>();
@@ -97,6 +106,29 @@ namespace MoonSharp.Parser {
             return false;
         }
 
+        // Try advancing to the next statement after ecountering parsing error
+        private void Sunchronize() {
+            Advance();
+
+            while(!IsAtEnd()) {
+                switch(tokens[current].Type) {
+                    case Class:
+                    case Fun:
+                    case For:
+                    case While:
+                    case If:
+                    case Return:
+                    case Let:
+                        return;
+                }
+
+                if(Previous().Type == Semicolon || Previous().Type == RightBracket) {
+                    Advance();
+                    return;
+                }
+
+            }
+        }
         private Token Advance() {
             if(!IsAtEnd()) current++;
             return Previous();
