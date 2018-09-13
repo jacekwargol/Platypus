@@ -2,14 +2,14 @@
 
 namespace SharpTypus.Parsing.Expressions {
 class Binary : Expr {
-private readonly Expr leftExpr;
-private readonly Expr rightExpr;
-private readonly Token operator_;
+public Expr LeftExpr { get; }
+public Expr RightExpr { get; }
+public Token Operator_ { get; }
 
 public Binary(Expr leftExpr, Expr rightExpr, Token operator_) {
-this.leftExpr = leftExpr;
-this.rightExpr = rightExpr;
-this.operator_ = operator_;
+LeftExpr = leftExpr;
+RightExpr = rightExpr;
+Operator_ = operator_;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}

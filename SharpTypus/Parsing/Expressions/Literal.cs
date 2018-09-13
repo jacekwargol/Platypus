@@ -2,10 +2,10 @@
 
 namespace SharpTypus.Parsing.Expressions {
 class Literal : Expr {
-private readonly Token token;
+public Token Token { get; }
 
 public Literal(Token token) {
-this.token = token;
+Token = token;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}

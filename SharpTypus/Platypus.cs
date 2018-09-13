@@ -9,7 +9,7 @@ namespace SharpTypus {
 
         public static void Main(string[] args) {
             if(args.Length > 1) {
-                Console.WriteLine("Usage: moonsharp [script]");
+                Console.WriteLine("Usage: platypus [script]");
                 return;
             }
 
@@ -62,8 +62,9 @@ namespace SharpTypus {
             }
 
             var parser = new Parser(tokens);
+            var printer = new AstPrinter();
             var expr = parser.Parse();
-            Console.WriteLine(expr);
+            Console.WriteLine(printer.Print(expr));
         }
 
         private static void ReportError(int line, string message) {

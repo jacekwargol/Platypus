@@ -31,19 +31,19 @@ namespace SharpTypus.Parsing {
         }
 
         private Expr Comparison() {
-            return ParseBinaryExpr(Additive, Plus, Minus);
+            return ParseBinaryExpr(Additive, Less, LessEqual, Greater, GreaterEqual);
         }
 
         private Expr Additive() {
-            return ParseBinaryExpr(Multiplicative, Star, Slash);
+            return ParseBinaryExpr(Multiplicative, Plus, Minus);
         }
 
         private Expr Multiplicative() {
-            return ParseBinaryExpr(Unary, Bang, Minus);
+            return ParseBinaryExpr(Unary, Star, Slash);
         }
 
         private Expr Unary() {
-            if(!IsMatching(Bang, Minus)) {
+            if(!TryMatchAndAdvance(Bang, Minus)) {
                 return Primary();
             }
 
@@ -51,7 +51,7 @@ namespace SharpTypus.Parsing {
         }
 
         private Expr Primary() {
-            if(IsMatching(LeftParen)) {
+            if(TryMatchAndAdvance(LeftParen)) {
                 return Grouping();
             }
 
@@ -66,7 +66,7 @@ namespace SharpTypus.Parsing {
         }
 
         private Token Consume(TokenType token, string message) {
-            if(IsMatching(token)) {
+            if(TryMatchAndAdvance(token)) {
                 return Advance();
             }
 
@@ -74,15 +74,14 @@ namespace SharpTypus.Parsing {
         }
 
         private Expr Literal() {
-            return new Literal(tokens[current]);
+            return new Literal(Advance());
         }
 
 
 
         private Expr ParseBinaryExpr(Func<Expr> exprMethod, params TokenType[] operators) {
             var left = exprMethod();
-
-            while(IsMatching(operators)) {
+            while(TryMatchAndAdvance(operators)) {
                 var operator_ = Previous();
                 var right = exprMethod();
                 left = new Binary(left, right, operator_);
@@ -91,7 +90,7 @@ namespace SharpTypus.Parsing {
             return left;
         }
 
-        private bool IsMatching(params TokenType[] types) {
+        private bool TryMatchAndAdvance(params TokenType[] types) {
             if(IsAtEnd()) {
                 return false;
             }
@@ -130,14 +129,18 @@ namespace SharpTypus.Parsing {
             }
         }
         private Token Advance() {
-            if(!IsAtEnd()) current++;
+            if(IsAtEnd()) {
+                return tokens[current];
+            }
+
+            current++;
             return Previous();
         }
 
         private Token Previous() {
-            return tokens[current - 1];
+            return current > 0 ? tokens[current - 1] : tokens[current];
         }
 
-        private bool IsAtEnd() => current >= tokens.Count;
+        private bool IsAtEnd() => current >= tokens.Count - 1;
     }
 }

@@ -5,13 +5,24 @@ using System.Text;
 
 namespace SharpTypus.Parsing {
     class AstPrinter : IExprVisitor<String> {
+
         public string Print(Expr expr) {
             return expr.Accept(this);
         }
 
-        public String Visit(Binary expr) => throw new NotImplementedException();
-        public String Visit(Unary expr) => throw new NotImplementedException();
-        public String Visit(Literal expr) => throw new NotImplementedException();
-        public String Visit(Grouping expr) => throw new NotImplementedException();
+        public String Visit(Binary expr) {
+            var exprSB = new StringBuilder();
+            exprSB.Append(expr.Operator_);
+            exprSB.Append(expr.LeftExpr.Accept(this));
+            exprSB.Append(expr.RightExpr.Accept(this));
+
+            return exprSB.ToString();
+        }
+
+        public String Visit(Unary expr) => expr.Operator_.ToString() + expr.Expr.ToString();
+
+        public String Visit(Literal expr) => expr.Token.ToString();
+
+        public String Visit(Grouping expr) => expr.Accept(this);
     }
 }

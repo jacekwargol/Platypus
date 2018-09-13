@@ -2,12 +2,12 @@
 
 namespace SharpTypus.Parsing.Expressions {
 class Unary : Expr {
-private readonly Expr expr;
-private readonly Token operator_;
+public Expr Expr { get; }
+public Token Operator_ { get; }
 
 public Unary(Expr expr, Token operator_) {
-this.expr = expr;
-this.operator_ = operator_;
+Expr = expr;
+Operator_ = operator_;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}

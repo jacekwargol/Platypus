@@ -15,7 +15,7 @@ namespace SharpTypus.Parsing {
         }
 
 
-        public override string ToString() =>
-            "Line " + line + ": " +  lexeme + ": " + Type;
+        public override string ToString() => lexeme;
+            //"Line " + line + ": " +  lexeme + ": " + Type;
     }
 }

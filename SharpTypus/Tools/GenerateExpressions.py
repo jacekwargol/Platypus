@@ -3,6 +3,11 @@ import os
 scriptName = os.path.basename(sys.argv[0])
 namespaceString = "namespace SharpTypus.Parsing.Expressions {\n"
 
+
+def upcaseString(string):
+	return string[0].upper() + string[1:]
+
+
 def generateExpressions(path, baseClass, visitorName, exprs):
     for name, types in exprs.items():
         generateExpression(path, name, baseClass, types)
@@ -19,7 +24,7 @@ def generateExpression(path, name, baseName, types):
 
     # Declare fields
     for typeName, type in types.items(): 
-        file.write(f"private readonly {type} {typeName};\n")
+        file.write(f"public {type} {upcaseString(typeName)} {{ get; }}\n")
 
     file.write("\n")
 
@@ -33,7 +38,7 @@ def generateExpression(path, name, baseName, types):
     constructorSignature += ")"
     file.write(f"{constructorSignature} {{\n")
     for typeName in types.keys():
-        file.write(f"this.{typeName} = {typeName};\n")
+        file.write(f"{upcaseString(typeName)} = {typeName};\n")
     file.write("}\n")
 
     file.write("\n")
