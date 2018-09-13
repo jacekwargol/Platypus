@@ -65,7 +65,7 @@ def generateExprVisitorInterface(path, name, exprs):
     file.close()
 
 
-generateExpressions("E:\\Programowanie\\C#\\Moon\\MoonSharp\\MoonSharp\\Parsing\\Expressions\\",
+generateExpressions("E:\\Programowanie\\C#\\Platypus\\SharpTypus\\Parsing\\Expressions\\",
     "Expr", "IExprVisitor",
     {
         "Binary": {"leftExpr": "Expr", "rightExpr": "Expr", "operator_": "Token" },
