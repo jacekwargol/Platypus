@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpTypus.Tests", "SharpTypus.Tests\SharpTypus.Tests.csproj", "{126F6327-968E-493C-BB67-808CA4ECDB7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpTypus.Tests", "SharpTypus.Tests\SharpTypus.Tests.csproj", "{745BDE32-B385-4A26-997D-0B6A6DEBA39D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +22,10 @@ Global
 		{68F4E29A-60C2-4B0E-9E5D-AA542CDFC274}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68F4E29A-60C2-4B0E-9E5D-AA542CDFC274}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68F4E29A-60C2-4B0E-9E5D-AA542CDFC274}.Release|Any CPU.Build.0 = Release|Any CPU
-		{126F6327-968E-493C-BB67-808CA4ECDB7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{126F6327-968E-493C-BB67-808CA4ECDB7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{126F6327-968E-493C-BB67-808CA4ECDB7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{126F6327-968E-493C-BB67-808CA4ECDB7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{745BDE32-B385-4A26-997D-0B6A6DEBA39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{745BDE32-B385-4A26-997D-0B6A6DEBA39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{745BDE32-B385-4A26-997D-0B6A6DEBA39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{745BDE32-B385-4A26-997D-0B6A6DEBA39D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
