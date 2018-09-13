@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using MoonSharp.Parsing;
+using SharpTypus.Parsing;
 
-namespace MoonSharp {
-    class Moon {
+namespace SharpTypus {
+    class Platypus {
         private static bool errorEcountered = false;
 
 

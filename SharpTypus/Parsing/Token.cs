@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MoonSharp.Parsing {
+namespace SharpTypus.Parsing {
     class Token {
         public TokenType Type { get; }
 

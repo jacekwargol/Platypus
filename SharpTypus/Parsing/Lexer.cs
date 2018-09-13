@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using static MoonSharp.Parsing.TokenType;
+using static SharpTypus.Parsing.TokenType;
 
-namespace MoonSharp.Parsing {
+namespace SharpTypus.Parsing {
     class Lexer {
         private readonly string source;
         private readonly List<Token> tokens = new List<Token>();
@@ -102,7 +102,7 @@ namespace MoonSharp.Parsing {
                     break;
 
                 default:
-                    Moon.GenerateError(line, "Unexpected character.");
+                    Platypus.GenerateError(line, "Unexpected character.");
                     break;
             }
         }
@@ -136,7 +136,7 @@ namespace MoonSharp.Parsing {
             }
 
             if(dotCount > 1) {
-                Moon.GenerateError(line, "Unexpected character.");
+                Platypus.GenerateError(line, "Unexpected character.");
                 return;
             }
 
@@ -161,7 +161,7 @@ namespace MoonSharp.Parsing {
                 return;
             }
 
-            Moon.GenerateError(line, "String does not have closing \"");
+            Platypus.GenerateError(line, "String does not have closing \"");
         }
 
         private bool IsAtEnd() => current >= source.Length;

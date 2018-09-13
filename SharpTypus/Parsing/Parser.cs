@@ -1,9 +1,9 @@
-﻿using MoonSharp.Parsing.Expressions;
+﻿using SharpTypus.Parsing.Expressions;
 using System;
 using System.Collections.Generic;
-using static MoonSharp.Parsing.TokenType;
+using static SharpTypus.Parsing.TokenType;
 
-namespace MoonSharp.Parsing {
+namespace SharpTypus.Parsing {
     class Parser {
         private List<Token> tokens;
         private int current;
