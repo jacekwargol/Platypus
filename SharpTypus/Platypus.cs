@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using SharpTypus.Interpreting;
 using SharpTypus.Parsing;
 using SharpTypus.Parsing.Expressions;
 
@@ -58,15 +59,14 @@ namespace SharpTypus {
             var lexer = new Lexer(source);
             var tokens = lexer.Tokenize();
 
-            foreach(var token in tokens) {
-                Console.WriteLine(token.ToString());
-            }
-
             var parser = new Parser(tokens);
             var printer = new AstPrinter();
             var expr = parser.Parse();
             var astString = printer.Print(expr);
             Console.WriteLine(astString);
+
+            var interpreter = new Interpreter();
+            Console.WriteLine(interpreter.Interprate(expr).ToString());
         }
 
         private static void ReportError(int line, string message) {
