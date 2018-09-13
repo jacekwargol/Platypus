@@ -76,6 +76,6 @@ generateExpressions("E:\\Programowanie\\C#\\Platypus\\SharpTypus\\Parsing\\Expre
         "Binary": {"leftExpr": "Expr", "rightExpr": "Expr", "operator_": "Token" },
         "Unary": {"expr": "Expr", "operator_": "Token"},
 		"Literal": {"token": "Token"},
-		"Grouping": {"epxr": "Expr"}, 
+		"Grouping": {"expr": "Expr"}, 
 	}
 )

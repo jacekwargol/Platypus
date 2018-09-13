@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using SharpTypus.Parsing;
+using SharpTypus.Parsing.Expressions;
 
 namespace SharpTypus {
     class Platypus {
@@ -64,7 +65,8 @@ namespace SharpTypus {
             var parser = new Parser(tokens);
             var printer = new AstPrinter();
             var expr = parser.Parse();
-            Console.WriteLine(printer.Print(expr));
+            var astString = printer.Print(expr);
+            Console.WriteLine(astString);
         }
 
         private static void ReportError(int line, string message) {

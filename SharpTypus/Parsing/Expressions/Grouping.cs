@@ -2,10 +2,10 @@
 
 namespace SharpTypus.Parsing.Expressions {
 class Grouping : Expr {
-public Expr Epxr { get; }
+public Expr Expr { get; }
 
-public Grouping(Expr epxr) {
-Epxr = epxr;
+public Grouping(Expr expr) {
+Expr = expr;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}

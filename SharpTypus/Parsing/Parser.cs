@@ -60,14 +60,13 @@ namespace SharpTypus.Parsing {
 
         private Expr Grouping() {
             var expr = Expression();
-            Consume(RightParen, "Missing ')' after expression.");
-
+            MatchOrThrowError(RightParen, "Missing ')' after expression.");
             return new Grouping(expr);
         }
 
-        private Token Consume(TokenType token, string message) {
+        private void MatchOrThrowError(TokenType token, string message) {
             if(TryMatchAndAdvance(token)) {
-                return Advance();
+                return;
             }
 
             throw new ParsingException(message);
@@ -91,9 +90,9 @@ namespace SharpTypus.Parsing {
         }
 
         private bool TryMatchAndAdvance(params TokenType[] types) {
-            if(IsAtEnd()) {
-                return false;
-            }
+            //if(IsAtEnd()) {
+            //    return false;
+            //}
 
             foreach(var type in types) {
                 if(tokens[current].Type == type) {
