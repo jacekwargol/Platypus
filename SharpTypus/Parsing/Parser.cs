@@ -90,10 +90,6 @@ namespace SharpTypus.Parsing {
         }
 
         private bool TryMatchAndAdvance(params TokenType[] types) {
-            //if(IsAtEnd()) {
-            //    return false;
-            //}
-
             foreach(var type in types) {
                 if(tokens[current].Type == type) {
                     Advance();

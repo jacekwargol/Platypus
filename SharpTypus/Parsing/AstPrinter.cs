@@ -14,8 +14,8 @@ namespace SharpTypus.Parsing {
         public String Visit(Binary expr) {
             var exprSB = new StringBuilder();
             exprSB.Append(expr.Operator_).Append(' ');
-            exprSB.Append(expr.LeftExpr.Accept(this)).Append(' ');
-            exprSB.Append(expr.RightExpr.Accept(this)).Append(' ');
+            exprSB.Append(expr.LeftExpr.Accept(this));
+            exprSB.Append(expr.RightExpr.Accept(this));
 
             return exprSB.ToString();
         }
