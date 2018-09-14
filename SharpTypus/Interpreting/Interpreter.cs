@@ -51,9 +51,34 @@ namespace SharpTypus.Interpreting {
                     return EvaluateMultiplication(left, right);
                 case TokenType.Slash:
                     return EvaluateDivision(left, right);
+
+                case TokenType.Less:
+                    return (double)left < (double)right;
+                case TokenType.Greater:
+                    return (double)left > (double)right;
+                case TokenType.LessEqual:
+                    return EvaluateLessEqual(left, right);
+                case TokenType.GreaterEqual:
+                    return EvaluateGreaterEqual(left, right);
             }
 
             return null;
+        }
+
+        private object EvaluateGreaterEqual(object left, object right) {
+            if(left is int && right is int) {
+                return (int)left >= (int)right;
+            }
+
+            return (double)left >= (double)right;
+        }
+
+        private bool EvaluateLessEqual(object left, object right) {
+            if(left is int && right is int) {
+                return (int)left <= (int)right;
+            }
+
+            return (double)left <= (double)right;
         }
 
         private object EvaluateDivision(object left, object right) {
