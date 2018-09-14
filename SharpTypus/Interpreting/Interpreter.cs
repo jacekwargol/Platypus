@@ -60,9 +60,22 @@ namespace SharpTypus.Interpreting {
                     return EvaluateLessEqual(left, right);
                 case TokenType.GreaterEqual:
                     return EvaluateGreaterEqual(left, right);
+
+                case TokenType.EqualEqual:
+                    return IsEqual(left, right);
+                case TokenType.BangEqual:
+                    return !IsEqual(left, right);
             }
 
             return null;
+        }
+
+        private bool IsEqual(object left, object right) {
+            if(left == null && right == null) {
+                return true;
+            }
+
+            return left == null ? false : left.Equals(right);
         }
 
         private object EvaluateGreaterEqual(object left, object right) {
