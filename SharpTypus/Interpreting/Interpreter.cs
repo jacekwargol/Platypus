@@ -27,6 +27,8 @@ namespace SharpTypus.Interpreting {
             return null;
         }
 
+        public object Visit(Grouping expr) => Evaluate(expr.Expr);
+
         public object Visit(Unary expr) {
             var right = Evaluate(expr.Expr);
 
@@ -37,20 +39,20 @@ namespace SharpTypus.Interpreting {
             return null;
         }
 
-
         public object Visit(Binary expr) {
             var left = Evaluate(expr.LeftExpr);
             var right = Evaluate(expr.RightExpr);
 
             switch(expr.Operator_.Type) {
-                case TokenType.Plus:
-                    return EvaluateAddition(left, right);
-                case TokenType.Minus:
-                    return EvaluateSubtraction(left, right);
                 case TokenType.Star:
                     return EvaluateMultiplication(left, right);
                 case TokenType.Slash:
                     return EvaluateDivision(left, right);
+
+                case TokenType.Plus:
+                    return EvaluateAddition(left, right);
+                case TokenType.Minus:
+                    return EvaluateSubtraction(left, right);
 
                 case TokenType.Less:
                     return (double)left < (double)right;
@@ -70,12 +72,9 @@ namespace SharpTypus.Interpreting {
             return null;
         }
 
-        private bool IsEqual(object left, object right) {
-            if(left == null && right == null) {
-                return true;
-            }
 
-            return left == null ? false : left.Equals(right);
+        private object Evaluate(Expr expr) {
+            return expr.Accept(this);
         }
 
         private object EvaluateGreaterEqual(object left, object right) {
@@ -133,11 +132,13 @@ namespace SharpTypus.Interpreting {
             return (double)left + (double)right;
         }
 
-        public object Visit(Grouping expr) => Evaluate(expr.Expr);
 
+        private bool IsEqual(object left, object right) {
+            if(left == null && right == null) {
+                return true;
+            }
 
-        private object Evaluate(Expr expr) {
-            return expr.Accept(this);
+            return left == null ? false : left.Equals(right);
         }
     }
 }
