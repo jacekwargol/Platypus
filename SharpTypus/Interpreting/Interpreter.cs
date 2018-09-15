@@ -73,9 +73,9 @@ namespace SharpTypus.Interpreting {
                     return EvaluateSubtraction(left, right);
 
                 case TokenType.Less:
-                    return (double)left < (double)right;
+                    return EvaluateLessThan(left, right);
                 case TokenType.Greater:
-                    return (double)left > (double)right;
+                    return EvaluateGreaterThan(left, right);
                 case TokenType.LessEqual:
                     return EvaluateLessEqual(left, right);
                 case TokenType.GreaterEqual:
@@ -91,11 +91,16 @@ namespace SharpTypus.Interpreting {
         }
 
 
+
         private object Evaluate(Expr expr) {
             return expr.Accept(this);
         }
 
         private object EvaluateGreaterEqual(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands must be numbers.");
+            }
+
             if(left is int && right is int) {
                 return (int)left >= (int)right;
             }
@@ -103,7 +108,27 @@ namespace SharpTypus.Interpreting {
             return (double)left >= (double)right;
         }
 
+        private object EvaluateGreaterThan(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands of multiplication must be numbers.");
+            }
+
+            return (double)left > (double)right;
+        }
+
+        private object EvaluateLessThan(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands of multiplication must be numbers.");
+            }
+
+            return (double)left < (double)right;
+        }
+
         private bool EvaluateLessEqual(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands must be numbers.");
+            }
+
             if(left is int && right is int) {
                 return (int)left <= (int)right;
             }
@@ -112,41 +137,55 @@ namespace SharpTypus.Interpreting {
         }
 
         private object EvaluateDivision(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands of division must be numbers.");
+            }
+
             if(left is int && right is int) {
                 return (int)left / (int)right;
             }
 
-            // One of the literals is float or double
             return (double)left / (double)right;
         }
 
         private object EvaluateMultiplication(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands of multiplication must be numbers.");
+            }
+
             if(left is int && right is int) {
                 return (int)left * (int)right;
             }
 
-            // One of the literals is float or double
             return (double)left * (double)right;
         }
 
         private object EvaluateSubtraction(object left, object right) {
+            if(!IsNumber(left) || !IsNumber(right)) {
+                throw new RuntimeException("Operands of substraction must be numbers.");
+            }
+
             if(left is int && right is int) {
                 return (int)left - (int)right;
             }
 
-            // One of the literals is float or double
             return (double)left - (double)right;
         }
 
         private object EvaluateAddition(object left, object right) {
+            if((!IsNumber(left) || !IsNumber(right)) ||
+                (!(left is string) || !(right is string) ) {
+                throw new RuntimeException("Operands of addition must be numbers or strings.");
+            }
             if(left is int && right is int) {
                 return (int)left + (int)right;
             }
+
+            // + operator can be used for string concatenation
             if(left is string || right is string) {
                 return left.ToString() + right.ToString();
             }
 
-            // One of the literals is float or double
             return (double)left + (double)right;
         }
 
