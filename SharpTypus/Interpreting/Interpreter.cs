@@ -36,6 +36,12 @@ namespace SharpTypus.Interpreting {
                 return (right is int ? -(int)right : -(double)right);
             }
 
+            if(expr.Operator_.Type == TokenType.Bang) {
+                if(right is bool) {
+                    return (bool)right;
+                }
+            }
+
             return null;
         }
 
