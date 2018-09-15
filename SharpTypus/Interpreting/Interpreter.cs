@@ -174,7 +174,7 @@ namespace SharpTypus.Interpreting {
 
         private object EvaluateAddition(object left, object right) {
             if((!IsNumber(left) || !IsNumber(right)) ||
-                (!(left is string) || !(right is string) ) {
+                (!(left is string) || !(right is string))) {
                 throw new RuntimeException("Operands of addition must be numbers or strings.");
             }
             if(left is int && right is int) {
