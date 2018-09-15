@@ -47,6 +47,30 @@ def generateExpression(path, name, baseName, types):
     file.write("public override T Accept<T>(IExprVisitor<T> visitor) => ")
     file.write("visitor.Visit(this);")
 
+    file.write("\n")
+    
+    # Overload equality operators
+    file.write(f"public static bool operator ==({name} left, {name} right) =>\n")
+    eqString = ""
+    for typeName, type in types.items():
+        eqString += (f"left.{upcaseString(typeName)} == right.{upcaseString(typeName)} && ")
+    eqString = eqString[:-4] + ";"
+    file.write(eqString)
+    file.write("\n")
+
+    file.write(f"public static bool operator !=({name} left, {name} right) =>\n")
+    file.write("!(left == right);")
+    file.write("\n")
+
+    file.write(f"public override bool Equals(object obj) => obj is {name} ? ({name})obj == this : false;\n")
+
+    file.write(f"public override int GetHashCode() => ")
+    tupleString = "("
+    for typeName, type in types.items():
+        tupleString += f"{upcaseString(typeName)}, "
+    tupleString = tupleString[:-2] + ")"
+    file.write(f"{tupleString}.GetHashCode();")
+    file.write("\n")
     file.write("}\n")
     file.write("}\n")
     file.close()

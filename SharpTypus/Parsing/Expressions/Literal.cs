@@ -8,5 +8,12 @@ public Literal(Token token) {
 Token = token;
 }
 
-public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}
+public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);
+public static bool operator ==(Literal left, Literal right) =>
+left.Token == right.Token;
+public static bool operator !=(Literal left, Literal right) =>
+!(left == right);
+public override bool Equals(object obj) => obj is Literal ? (Literal)obj == this : false;
+public override int GetHashCode() => (Token).GetHashCode();
+}
 }
