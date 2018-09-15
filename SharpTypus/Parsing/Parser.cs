@@ -65,7 +65,11 @@ namespace SharpTypus.Parsing {
         }
 
         private Expr Literal() {
-            return new Literal(Advance());
+            if(TryMatchAndAdvance(Integer, Float, StringToken, True, False)) {
+                return new Literal(Previous());
+            }
+
+            throw Exception("Invalid token.");
         }
 
 

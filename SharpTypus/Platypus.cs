@@ -63,10 +63,6 @@ namespace SharpTypus {
             var lexer = new Lexer(source);
             var tokens = lexer.Tokenize();
 
-            foreach(var token in tokens) {
-                Console.WriteLine(token.ToString());
-            }
-
             var parser = new Parser(tokens);
             var printer = new AstPrinter();
             var expr = parser.Parse();
