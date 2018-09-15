@@ -22,8 +22,13 @@ namespace SharpTypus {
             }
         }
 
-        public static void GenerateError(int line, string message) {
-            ReportError(line, message);
+        public static void GenerateException(Token token, string message) {
+            ReportException(token.Line, message);
+            errorEcountered = true;
+        }
+
+        public static void GenerateException(int line, string message) {
+            ReportException(line, message);
             errorEcountered = true;
         }
 
@@ -58,10 +63,6 @@ namespace SharpTypus {
             var lexer = new Lexer(source);
             var tokens = lexer.Tokenize();
 
-            foreach(var token in tokens) {
-                Console.WriteLine(token.ToString());
-            }
-
             var parser = new Parser(tokens);
             var printer = new AstPrinter();
             var expr = parser.Parse();
@@ -69,8 +70,8 @@ namespace SharpTypus {
             Console.WriteLine(astString);
         }
 
-        private static void ReportError(int line, string message) {
-            Console.WriteLine($"Error: line {line}, {message}");
+        public static void ReportException(int line, string message) {
+            Console.WriteLine($"Exception: line {line}, {message}");
         }
     }
 }

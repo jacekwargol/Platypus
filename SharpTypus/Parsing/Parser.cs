@@ -64,16 +64,12 @@ namespace SharpTypus.Parsing {
             return new Grouping(expr);
         }
 
-        private void MatchOrThrowError(TokenType token, string message) {
-            if(TryMatchAndAdvance(token)) {
-                return;
+        private Expr Literal() {
+            if(TryMatchAndAdvance(Integer, Float, StringToken, True, False)) {
+                return new Literal(Previous());
             }
 
-            throw new ParsingException(message);
-        }
-
-        private Expr Literal() {
-            return new Literal(Advance());
+            throw Exception("Invalid token.");
         }
 
 
@@ -98,6 +94,19 @@ namespace SharpTypus.Parsing {
             }
 
             return false;
+        }
+
+        private void MatchOrThrowError(TokenType token, string message) {
+            if(TryMatchAndAdvance(token)) {
+                return;
+            }
+
+            throw Exception(message);
+        }
+
+        private ParsingException Exception(string message) {
+            Platypus.GenerateException(tokens[current], message);
+            return new ParsingException(message);
         }
 
         // Try advancing to the next statement after ecountering parsing error
