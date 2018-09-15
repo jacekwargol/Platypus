@@ -6,7 +6,8 @@ using SharpTypus.Parsing.Expressions;
 
 namespace SharpTypus {
     class Platypus {
-        private static bool errorEcountered = false;
+        private static bool exceptionEncountered = false;
+        private static bool runtimeExceptionEncountered = false;
 
 
         public static void Main(string[] args) {
@@ -23,9 +24,13 @@ namespace SharpTypus {
             }
         }
 
-        public static void GenerateError(int line, string message) {
-            ReportError(line, message);
-            errorEcountered = true;
+        public static void GenerateException(int line, string message) {
+            ReportException(line, message);
+            exceptionEncountered = true;
+        }
+
+        public static void GenerateRuntimeException(RuntimeException exception) {
+            ReportRuntimeError(exception.Message);
         }
 
 
@@ -33,7 +38,7 @@ namespace SharpTypus {
             while(true) {
                 Console.Write("> ");
                 Run(Console.ReadLine());
-                errorEcountered = false;
+                exceptionEncountered = false;
             }
         }
 
@@ -50,7 +55,7 @@ namespace SharpTypus {
 
             Run(string.Join('\n', script));
             
-            if(errorEcountered) {
+            if(exceptionEncountered || runtimeExceptionEncountered) {
                 return;
             }
         }
@@ -66,12 +71,17 @@ namespace SharpTypus {
             Console.WriteLine(astString);
 
             var interpreter = new Interpreter();
-            Console.WriteLine(interpreter.Interprate(expr).ToString());
+            interpreter.Interpret(expr);
         }
 
-        private static void ReportError(int line, string message) {
-            Console.WriteLine($"Error: line {line}, {message}");
+        private static void ReportException(int line, string message) {
+            Console.WriteLine($"Exception: line {line}, {message}");
         }
+
+        private static void ReportRuntimeError(string message) {
+            Console.WriteLine($"Runtime exception: {message}");
+        }
+
     }
 }
 

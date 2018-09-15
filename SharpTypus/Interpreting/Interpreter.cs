@@ -4,8 +4,13 @@ using System;
 
 namespace SharpTypus.Interpreting {
     class Interpreter : IExprVisitor<object> {
-        public object Interprate(Expr expr) {
-            return Evaluate(expr);
+        public void Interpret(Expr expr) {
+            try {
+                Console.WriteLine(Evaluate(expr));
+            }
+            catch(RuntimeException ex) {
+                Platypus.GenerateRuntimeException(ex);
+            }
         }
 
 
@@ -14,14 +19,16 @@ namespace SharpTypus.Interpreting {
                 if(Int32.TryParse(expr.Token.Lexeme, out int result)) {
                     return result;
                 }
-                throw (new ParsingException("Error interpreting int line: " + expr.Token.Line));
+                throw new RuntimeException(expr.Token,
+                    "Wrong token: " + expr.Token.Line);
             }
 
             if(expr.Token.Type == TokenType.Float) {
                 if(Double.TryParse(expr.Token.Lexeme, out double result)) {
                     return result;
                 }
-                throw (new ParsingException("Error interpreting int line: " + expr.Token.Line));
+                throw new RuntimeException(expr.Token,
+                    "Wrong token: " + expr.Token.Line);
             }
 
             return null;
@@ -33,6 +40,9 @@ namespace SharpTypus.Interpreting {
             var right = Evaluate(expr.Expr);
 
             if(expr.Operator_.Type == TokenType.Minus) {
+                if(!IsNumber(right)) {
+                    throw new RuntimeException("Operand must be a number.");
+                }
                 return (right is int ? -(int)right : -(double)right);
             }
 
@@ -40,6 +50,8 @@ namespace SharpTypus.Interpreting {
                 if(right is bool) {
                     return (bool)right;
                 }
+
+                throw new RuntimeException("Operand must ba a bool.");
             }
 
             return null;
@@ -136,6 +148,11 @@ namespace SharpTypus.Interpreting {
 
             // One of the literals is float or double
             return (double)left + (double)right;
+        }
+
+
+        private bool IsNumber(object obj) {
+            return obj is int || obj is double;
         }
 
 

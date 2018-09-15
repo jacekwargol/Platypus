@@ -20,7 +20,7 @@ namespace SharpTypus.Parsing {
             return exprSB.ToString();
         }
 
-        public String Visit(Unary expr) => expr.Operator_.ToString() + expr.Expr.ToString() + ' ';
+        public String Visit(Unary expr) => expr.Operator_.ToString() + expr.Expr.Accept(this) + ' ';
 
         public String Visit(Literal expr) => expr.Token.ToString() + ' ';
 
