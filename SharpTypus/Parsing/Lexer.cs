@@ -102,7 +102,7 @@ namespace SharpTypus.Parsing {
                     break;
 
                 default:
-                    Platypus.GenerateError(line, "Unexpected character.");
+                    Platypus.GenerateException(line, "Unexpected character.");
                     break;
             }
         }
@@ -136,7 +136,7 @@ namespace SharpTypus.Parsing {
             }
 
             if(dotCount > 1) {
-                Platypus.GenerateError(line, "Unexpected character.");
+                Platypus.GenerateException(line, "Unexpected character.");
                 return;
             }
 
@@ -161,7 +161,7 @@ namespace SharpTypus.Parsing {
                 return;
             }
 
-            Platypus.GenerateError(line, "String does not have closing \"");
+            Platypus.GenerateException(line, "String does not have closing \"");
         }
 
         private bool IsAtEnd() => current >= source.Length;

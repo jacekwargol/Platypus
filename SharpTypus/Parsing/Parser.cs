@@ -64,14 +64,6 @@ namespace SharpTypus.Parsing {
             return new Grouping(expr);
         }
 
-        private void MatchOrThrowError(TokenType token, string message) {
-            if(TryMatchAndAdvance(token)) {
-                return;
-            }
-
-            throw new ParsingException(message);
-        }
-
         private Expr Literal() {
             return new Literal(Advance());
         }
@@ -98,6 +90,19 @@ namespace SharpTypus.Parsing {
             }
 
             return false;
+        }
+
+        private void MatchOrThrowError(TokenType token, string message) {
+            if(TryMatchAndAdvance(token)) {
+                return;
+            }
+
+            throw Exception(message);
+        }
+
+        private ParsingException Exception(string message) {
+            Platypus.GenerateException(tokens[current], message);
+            return new ParsingException(message);
         }
 
         // Try advancing to the next statement after ecountering parsing error

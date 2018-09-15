@@ -3,19 +3,17 @@
 namespace SharpTypus.Parsing {
     class Token {
         public TokenType Type { get; }
-
-        private readonly String lexeme;
-        private readonly int line;
-
+        public string Lexeme { get; }
+        public int Line { get; }
 
         public Token(TokenType type, string lexeme, int line) {
             Type = type;
-            this.lexeme = lexeme;
-            this.line = line;
+            this.Lexeme = lexeme;
+            this.Line = line;
         }
 
 
-        public override string ToString() => lexeme;
+        public override string ToString() => Lexeme;
             //"Line " + line + ": " +  lexeme + ": " + Type;
     }
 }
