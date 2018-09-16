@@ -65,8 +65,8 @@ namespace SharpTypus.Parsing {
         }
 
         private Expr Literal() {
-            if(TryMatchAndAdvance(Integer, Float, StringToken, True, False)) {
-                return new Literal(Previous());
+            if(TryMatch(Integer, Float, StringToken, True, False)) {
+                return new Literal(Advance());
             }
 
             throw Exception("Invalid token.");
@@ -85,12 +85,20 @@ namespace SharpTypus.Parsing {
             return left;
         }
 
-        private bool TryMatchAndAdvance(params TokenType[] types) {
+        private bool TryMatch(params TokenType[] types) {
             foreach(var type in types) {
                 if(tokens[current].Type == type) {
-                    Advance();
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        private bool TryMatchAndAdvance(params TokenType[] types) {
+            if(TryMatch(types)) {
+                Advance();
+                return true;
             }
 
             return false;

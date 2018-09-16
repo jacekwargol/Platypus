@@ -7,8 +7,5 @@
 
         public static bool operator ==(Expr left, Expr right) => left.Equals(right);
         public static bool operator !=(Expr left, Expr right) => !left.Equals(right);
-
-
-
     }
 }
