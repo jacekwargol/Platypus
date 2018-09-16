@@ -11,11 +11,10 @@ Operator_ = operator_;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);
-public static bool operator ==(Unary left, Unary right) =>
-left.Expr == right.Expr && left.Operator_ == right.Operator_;
-public static bool operator !=(Unary left, Unary right) =>
-!(left == right);
-public override bool Equals(object obj) => obj is Unary ? (Unary)obj == this : false;
+public override bool Equals(object obj) {
+if(!(obj is Unary)) return false;
+return ((Unary)obj).Expr == this.Expr && ((Unary)obj).Operator_ == this.Operator_;
+}
 public override int GetHashCode() => (Expr, Operator_).GetHashCode();
 }
 }

@@ -9,11 +9,10 @@ Expr = expr;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);
-public static bool operator ==(Grouping left, Grouping right) =>
-left.Expr == right.Expr;
-public static bool operator !=(Grouping left, Grouping right) =>
-!(left == right);
-public override bool Equals(object obj) => obj is Grouping ? (Grouping)obj == this : false;
+public override bool Equals(object obj) {
+if(!(obj is Grouping)) return false;
+return ((Grouping)obj).Expr == this.Expr;
+}
 public override int GetHashCode() => (Expr).GetHashCode();
 }
 }

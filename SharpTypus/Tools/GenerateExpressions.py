@@ -50,20 +50,14 @@ def generateExpression(path, name, baseName, types):
     file.write("\n")
     
     # Overload equality operators
-    file.write(f"public static bool operator ==({name} left, {name} right) =>\n")
+    file.write(f"public override bool Equals(object obj) {{\n")
+    file.write(f"if(!(obj is {name})) return false;\n")
     eqString = ""
     for typeName, type in types.items():
-        eqString += (f"left.{upcaseString(typeName)} == right.{upcaseString(typeName)} && ")
+        eqString += (f"(({name})obj).{upcaseString(typeName)} == this.{upcaseString(typeName)} && ")
     eqString = eqString[:-4] + ";"
-    file.write(eqString)
-    file.write("\n")
-
-    file.write(f"public static bool operator !=({name} left, {name} right) =>\n")
-    file.write("!(left == right);")
-    file.write("\n")
-
-    file.write(f"public override bool Equals(object obj) => obj is {name} ? ({name})obj == this : false;\n")
-
+    file.write("return " + eqString + "\n")
+    file.write("}\n")
     file.write(f"public override int GetHashCode() => ")
     tupleString = "("
     for typeName, type in types.items():

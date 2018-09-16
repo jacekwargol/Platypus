@@ -13,11 +13,10 @@ Operator_ = operator_;
 }
 
 public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);
-public static bool operator ==(Binary left, Binary right) =>
-left.LeftExpr == right.LeftExpr && left.RightExpr == right.RightExpr && left.Operator_ == right.Operator_;
-public static bool operator !=(Binary left, Binary right) =>
-!(left == right);
-public override bool Equals(object obj) => obj is Binary ? (Binary)obj == this : false;
+public override bool Equals(object obj) {
+if(!(obj is Binary)) return false;
+return ((Binary)obj).LeftExpr == this.LeftExpr && ((Binary)obj).RightExpr == this.RightExpr && ((Binary)obj).Operator_ == this.Operator_;
+}
 public override int GetHashCode() => (LeftExpr, RightExpr, Operator_).GetHashCode();
 }
 }
