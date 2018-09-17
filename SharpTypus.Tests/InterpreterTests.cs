@@ -75,5 +75,18 @@ namespace SharpTypus.Tests {
 
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void CanConcatenateStrings() {
+            var expr = new Binary(new Literal(new Token(StringToken, "ab", 1)), 
+                new Literal(new Token(StringToken, "acd", 1)), new Token(Plus, "+", 1));
+
+            var expected = "abcd";
+
+            var interpreter = new Interpreter();
+            var actual = interpreter.Visit(expr);
+
+            Assert.Equal(expected, actual);
+        }
     }
 }
