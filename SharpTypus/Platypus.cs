@@ -29,6 +29,11 @@ namespace SharpTypus {
             exceptionEncountered = true;
         }
 
+        public static void GenerateException(Token token, string message) {
+            ReportException(token.Line, message);
+            exceptionEncountered = true;
+        }
+
         public static void GenerateRuntimeException(RuntimeException exception) {
             ReportRuntimeError(exception.Message);
         }
