@@ -35,7 +35,8 @@ namespace SharpTypus.Interpreting {
                 case StringToken:
                     return expr.Token.Lexeme;
 
-                case Bool:
+                case True:
+                case False:
                     return Convert.ToBoolean(expr.Token.Lexeme);
             }
 
@@ -56,7 +57,7 @@ namespace SharpTypus.Interpreting {
 
             if(expr.Operator_.Type == TokenType.Bang) {
                 if(right is bool) {
-                    return (bool)right;
+                    return !(bool)right;
                 }
 
                 throw new RuntimeException("Operand must ba a bool.");
