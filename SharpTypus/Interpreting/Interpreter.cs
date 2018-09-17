@@ -114,7 +114,7 @@ namespace SharpTypus.Interpreting {
                 return (int)left >= (int)right;
             }
 
-            return (double)left >= (double)right;
+            return Convert.ToDouble(left) >= Convert.ToDouble(right);
         }
 
         private object EvaluateGreaterThan(object left, object right) {
@@ -122,7 +122,7 @@ namespace SharpTypus.Interpreting {
                 throw new RuntimeException("Operands of multiplication must be numbers.");
             }
 
-            return (double)left > (double)right;
+            return Convert.ToDouble(left) > Convert.ToDouble(right);
         }
 
         private object EvaluateLessThan(object left, object right) {
@@ -130,7 +130,7 @@ namespace SharpTypus.Interpreting {
                 throw new RuntimeException("Operands of multiplication must be numbers.");
             }
 
-            return (double)left < (double)right;
+            return Convert.ToDouble(left) < Convert.ToDouble(right);
         }
 
         private bool EvaluateLessEqual(object left, object right) {
@@ -142,7 +142,7 @@ namespace SharpTypus.Interpreting {
                 return (int)left <= (int)right;
             }
 
-            return (double)left <= (double)right;
+            return Convert.ToDouble(left) <= Convert.ToDouble(right);
         }
 
         private object EvaluateDivision(object left, object right) {
@@ -154,7 +154,7 @@ namespace SharpTypus.Interpreting {
                 return (int)left / (int)right;
             }
 
-            return (double)left / (double)right;
+            return Convert.ToDouble(left) / Convert.ToDouble(right);
         }
 
         private object EvaluateMultiplication(object left, object right) {
@@ -166,7 +166,7 @@ namespace SharpTypus.Interpreting {
                 return (int)left * (int)right;
             }
 
-            return (double)left * (double)right;
+            return Convert.ToDouble(left) * Convert.ToDouble(right);
         }
 
         private object EvaluateSubtraction(object left, object right) {
@@ -182,8 +182,7 @@ namespace SharpTypus.Interpreting {
         }
 
         private object EvaluateAddition(object left, object right) {
-            if((!IsNumber(left) || !IsNumber(right)) ||
-                (!(left is string) || !(right is string))) {
+            if((!IsNumber(left) || !IsNumber(right)) && (!(left is string) || !(right is string))) {
                 throw new RuntimeException("Operands of addition must be numbers or strings.");
             }
             if(left is int && right is int) {
@@ -195,7 +194,7 @@ namespace SharpTypus.Interpreting {
                 return left.ToString() + right.ToString();
             }
 
-            return (double)left + (double)right;
+            return Convert.ToDouble(left) + Convert.ToDouble(right);
         }
 
 
