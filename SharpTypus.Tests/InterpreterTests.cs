@@ -79,7 +79,7 @@ namespace SharpTypus.Tests {
         [Fact]
         public void CanConcatenateStrings() {
             var expr = new Binary(new Literal(new Token(StringToken, "ab", 1)), 
-                new Literal(new Token(StringToken, "acd", 1)), new Token(Plus, "+", 1));
+                new Literal(new Token(StringToken, "cd", 1)), new Token(Plus, "+", 1));
 
             var expected = "abcd";
 
