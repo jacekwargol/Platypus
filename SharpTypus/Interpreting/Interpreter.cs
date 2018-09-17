@@ -1,6 +1,7 @@
 ﻿using SharpTypus.Parsing;
 using SharpTypus.Parsing.Expressions;
 using System;
+using System.Globalization;
 
 namespace SharpTypus.Interpreting {
     class Interpreter : IExprVisitor<object> {
@@ -24,7 +25,7 @@ namespace SharpTypus.Interpreting {
             }
 
             if(expr.Token.Type == TokenType.Float) {
-                if(Double.TryParse(expr.Token.Lexeme, out double result)) {
+                if(Double.TryParse(expr.Token.Lexeme, NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
                     return result;
                 }
                 throw new RuntimeException(expr.Token,

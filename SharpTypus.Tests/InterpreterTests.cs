@@ -20,7 +20,7 @@ namespace SharpTypus.Tests {
         [Fact]
         public void CanIntepretFloat() {
             var expr = new Literal(new Token(Float, "2.1", 1));
-            var expected = 1.0;
+            var expected = 2.1;
 
             var interpreter = new Interpreter();
             var actual = interpreter.Visit(expr);
