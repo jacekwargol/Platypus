@@ -2,6 +2,7 @@
 using SharpTypus.Parsing.Expressions;
 using System;
 using System.Globalization;
+using static SharpTypus.Parsing.TokenType;
 
 namespace SharpTypus.Interpreting {
     class Interpreter : IExprVisitor<object> {
@@ -16,20 +17,26 @@ namespace SharpTypus.Interpreting {
 
 
         public object Visit(Literal expr) {
-            if(expr.Token.Type == TokenType.Integer) {
-                if(Int32.TryParse(expr.Token.Lexeme, out int result)) {
-                    return result;
-                }
-                throw new RuntimeException(expr.Token,
-                    "Wrong token: " + expr.Token.Line);
-            }
+            switch(expr.Token.Type) {
+                case Integer:
+                    if(Int32.TryParse(expr.Token.Lexeme, out int i)) {
+                        return i;
+                    }
+                    throw new RuntimeException(expr.Token,
+                        "Wrong token: " + expr.Token.Line);
 
-            if(expr.Token.Type == TokenType.Float) {
-                if(Double.TryParse(expr.Token.Lexeme, NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
-                    return result;
-                }
-                throw new RuntimeException(expr.Token,
-                    "Wrong token: " + expr.Token.Line);
+                case Float:
+                    if(Double.TryParse(expr.Token.Lexeme, NumberStyles.Any, CultureInfo.InvariantCulture, out double f)) {
+                        return f;
+                    }
+                    throw new RuntimeException(expr.Token,
+                        "Wrong token: " + expr.Token.Line);
+
+                case StringToken:
+                    return expr.Token.Lexeme;
+
+                case Bool:
+                    return Convert.ToBoolean(expr.Token.Lexeme);
             }
 
             return null;
