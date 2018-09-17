@@ -6,6 +6,12 @@ eq_op =				"==" | "!=" ;
 comp_op =			"<" | ">" | "<=" | ">=" ;
 
 
+program =			statement* EOF ;
+
+statement =			exprStatement ;
+exprStatement =		expression ";" ;
+
+
 // expressions
 expression =		equality ;
 equality =			comparison (eq_op comparision)* ;
