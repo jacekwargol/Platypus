@@ -47,6 +47,24 @@ def generateExpression(path, name, baseName, types):
     file.write("public override T Accept<T>(IExprVisitor<T> visitor) => ")
     file.write("visitor.Visit(this);")
 
+    file.write("\n")
+    
+    # Overload equality operators
+    file.write(f"public override bool Equals(object obj) {{\n")
+    file.write(f"if(!(obj is {name})) return false;\n")
+    eqString = ""
+    for typeName, type in types.items():
+        eqString += (f"(({name})obj).{upcaseString(typeName)} == this.{upcaseString(typeName)} && ")
+    eqString = eqString[:-4] + ";"
+    file.write("return " + eqString + "\n")
+    file.write("}\n")
+    file.write(f"public override int GetHashCode() => ")
+    tupleString = "("
+    for typeName, type in types.items():
+        tupleString += f"{upcaseString(typeName)}, "
+    tupleString = tupleString[:-2] + ")"
+    file.write(f"{tupleString}.GetHashCode();")
+    file.write("\n")
     file.write("}\n")
     file.write("}\n")
     file.close()

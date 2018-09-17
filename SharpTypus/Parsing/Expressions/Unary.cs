@@ -10,5 +10,11 @@ Expr = expr;
 Operator_ = operator_;
 }
 
-public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);}
+public override T Accept<T>(IExprVisitor<T> visitor) => visitor.Visit(this);
+public override bool Equals(object obj) {
+if(!(obj is Unary)) return false;
+return ((Unary)obj).Expr == this.Expr && ((Unary)obj).Operator_ == this.Operator_;
+}
+public override int GetHashCode() => (Expr, Operator_).GetHashCode();
+}
 }

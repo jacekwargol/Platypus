@@ -8,7 +8,7 @@ namespace SharpTypus.Parsing {
 
         // Print expression in polish notation
         public string Print(Expr expr) {
-            return expr.Accept(this);
+            return expr?.Accept(this);
         }
 
         public String Visit(Binary expr) {

@@ -9,11 +9,21 @@ namespace SharpTypus.Parsing {
         public Token(TokenType type, string lexeme, int line) {
             Type = type;
             Lexeme = lexeme;
-            this.Line = line;
+            Line = line;
         }
 
 
         public override string ToString() => Lexeme;
-            //"Line " + line + ": " +  lexeme + ": " + Type;
+
+        public static bool operator ==(Token left, Token right) =>
+            left.Type == right.Type && left.Lexeme == right.Lexeme;
+
+        public static bool operator !=(Token left, Token right) =>
+            !(left == right);
+
+        public override bool Equals(object obj) => obj is Token ? (Token)obj == this : false;
+
+        public override int GetHashCode() => (Type, Lexeme, Line).GetHashCode();
+
     }
 }
