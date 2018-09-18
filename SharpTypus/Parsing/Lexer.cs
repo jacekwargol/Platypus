@@ -25,7 +25,10 @@ namespace SharpTypus.Parsing {
             { "this", This },
             { "base", Base },
             { "let", Let },
-            { "return", Return }
+            { "return", Return },
+            { "string", StringToken },
+            { "i32", I32 },
+            { "f64", F64 },
         };
 
         public Lexer(string source) => this.source = source;
