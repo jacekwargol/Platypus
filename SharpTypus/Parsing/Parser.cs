@@ -58,8 +58,8 @@ namespace SharpTypus.Parsing {
             if(!TryMatchAndAdvance(Bang, Minus)) {
                 return Primary();
             }
-
-            return new Unary(Unary(), Previous());
+            var op = Previous();
+            return new Unary(Unary(), op);
         }
 
         private Expr Primary() {
