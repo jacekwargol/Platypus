@@ -8,7 +8,7 @@ namespace SharpTypus.Tests {
     public class InterpreterTests {
         [Fact]
         public void CanIntepretInteger() {
-            var expr = new Literal(new Token(Integer, "1", 1));
+            var expr = new Literal(new Token(I32, "1", 1));
             var expected = 1;
 
             var interpreter = new Interpreter();
@@ -19,7 +19,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanIntepretFloat() {
-            var expr = new Literal(new Token(Float, "2.1", 1));
+            var expr = new Literal(new Token(F64, "2.1", 1));
             var expected = 2.1;
 
             var interpreter = new Interpreter();
@@ -30,7 +30,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanInterpretMinusUnary() {
-            var expr = new Unary(new Literal(new Token(Float, "2.1", 1)), new Token(Minus, "-", 1));
+            var expr = new Unary(new Literal(new Token(F64, "2.1", 1)), new Token(Minus, "-", 1));
             var expected = -2.1;
 
             var interpreter = new Interpreter();
@@ -52,7 +52,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanInterpretIntFloatAddition() {
-            var expr = new Binary(new Literal(new Token(Integer, "3", 1)), new Literal(new Token(Float, "2.1", 1)),
+            var expr = new Binary(new Literal(new Token(I32, "3", 1)), new Literal(new Token(F64, "2.1", 1)),
                 new Token(Plus, "+", 1));
 
             var expected = 5.1;
@@ -65,8 +65,8 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanInterpretComplexAddition() {
-            var right = new Binary(new Literal(new Token(Float, "2.0", 1)), new Literal(new Token(Integer, "2", 1)), new Token(Star, "*", 1));
-            var expr = new Binary(new Literal(new Token(Integer, "1", 1)), right, new Token(Plus, "+", 1));
+            var right = new Binary(new Literal(new Token(F64, "2.0", 1)), new Literal(new Token(I32, "2", 1)), new Token(Star, "*", 1));
+            var expr = new Binary(new Literal(new Token(I32, "1", 1)), right, new Token(Plus, "+", 1));
 
             var expected = 5.0;
 

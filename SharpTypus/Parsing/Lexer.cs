@@ -140,7 +140,7 @@ namespace SharpTypus.Parsing {
                 return;
             }
 
-            AddToken(dotCount == 1 ? Float : Integer);
+            AddToken(dotCount == 1 ? F64 : I32);
         }
 
         private void AddToken(TokenType type, string lexame = null) {

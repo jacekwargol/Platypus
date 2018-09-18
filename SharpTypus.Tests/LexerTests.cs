@@ -9,7 +9,7 @@ namespace SharpTypus.Tests {
         [Fact]
         public void CanTokenizeInteger() {
             var i = "123";
-            var expected = new Token(Integer, i, 1);
+            var expected = new Token(I32, i, 1);
 
             var lexer = new Lexer(i);
             var actual = lexer.Tokenize()[0];
@@ -21,8 +21,8 @@ namespace SharpTypus.Tests {
         public void CanTokenizeFloats() {
             var s = "12. 12.34";
             var expected = new List<Token>() {
-                new Token(Float, "12.", 1),
-                new Token(Float, "12.34", 1)
+                new Token(F64, "12.", 1),
+                new Token(F64, "12.34", 1)
             };
 
             var lexer = new Lexer(s);
@@ -61,9 +61,9 @@ namespace SharpTypus.Tests {
         public void CanTokenizeSimpleExpression() {
             var addition = "1 + 2";
             var expected = new List<Token>() {
-                new Token(Integer, "1", 1),
+                new Token(I32, "1", 1),
                 new Token(Plus, "+", 1),
-                new Token(Integer, "2", 1)
+                new Token(I32, "2", 1)
             };
 
             var lexer = new Lexer(addition);

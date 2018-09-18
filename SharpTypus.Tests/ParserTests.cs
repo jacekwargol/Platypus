@@ -10,7 +10,7 @@ namespace SharpTypus.Tests {
         [Fact]
         public void CanParseValidLiteral() {
             var literals = new List<Token>() {
-                new Token(Integer, "12", 1)
+                new Token(I32, "12", 1)
             };
 
             var excepted = new Literal(literals[0]);
@@ -23,7 +23,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanParseSImpleGroupingExpresion() {
-            var intToken = new Token(Integer, "123", 1);
+            var intToken = new Token(I32, "123", 1);
             var literals = new List<Token>() {
                 new Token(LeftParen, "(", 1),
                 intToken,
@@ -39,7 +39,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanParseUnaryExpresion() {
-            var intToken = new Token(Integer, "123", 1);
+            var intToken = new Token(I32, "123", 1);
             var literals = new List<Token>() {
                 new Token(Minus, "-", 1),
                 intToken,
@@ -54,7 +54,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanParseSimpleMultiplicativeExpression() {
-            var floatToken = new Token(Float, "1.0", 1);
+            var floatToken = new Token(F64, "1.0", 1);
             var opToken = new Token(Star, "*", 1);
             var tokens = new List<Token>() {
                 floatToken,
@@ -72,7 +72,7 @@ namespace SharpTypus.Tests {
 
         [Fact]
         public void CanParseComplexBinaryExpression() {
-            var floatToken = new Token(Float, "1.0", 1);
+            var floatToken = new Token(F64, "1.0", 1);
             var tokens = new List<Token>() {
                 floatToken,
                 new Token(Star, "*", 1),
