@@ -48,7 +48,7 @@ namespace SharpTypus.Parsing {
                 initializer = Expression();
             }
 
-            MatchOrThrowError("Expected ';' after cariable declaration.");
+            MatchOrThrowError("Expected ';' after variable declaration.", Semicolon);
 
             return new LetStatement(name, type, initializer);
         }
