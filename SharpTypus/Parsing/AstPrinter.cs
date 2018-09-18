@@ -29,5 +29,7 @@ namespace SharpTypus.Parsing {
         public String Visit(Grouping expr) => expr.Expr.Accept(this);
 
         public object Visit(ExprStatement statement) => statement.Expr.Accept(this);
+        public string Visit(Variable expr) => throw new NotImplementedException();
+        public object Visit(LetStatement expr) => throw new NotImplementedException();
     }
 }
