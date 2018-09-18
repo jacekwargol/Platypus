@@ -221,8 +221,5 @@ namespace SharpTypus.Interpreting {
             Evaluate(statement.Expr);
             return null;
         }
-
-        public object Visit(Variable expr) => throw new NotImplementedException();
-        public object Visit(LetStatement expr) => throw new NotImplementedException();
     }
 }
