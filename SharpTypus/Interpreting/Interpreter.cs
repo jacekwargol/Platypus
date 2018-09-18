@@ -1,5 +1,5 @@
 ﻿using SharpTypus.Parsing;
-using SharpTypus.Parsing.Expressions;
+using SharpTypus.Expressions;
 using System;
 using System.Globalization;
 using static SharpTypus.Parsing.TokenType;

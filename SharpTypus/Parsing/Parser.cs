@@ -1,4 +1,4 @@
-﻿using SharpTypus.Parsing.Expressions;
+﻿using SharpTypus.Expressions;
 using System;
 using System.Collections.Generic;
 using static SharpTypus.Parsing.TokenType;
