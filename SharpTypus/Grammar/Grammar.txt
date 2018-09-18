@@ -5,8 +5,14 @@ unary_op =			"!" | "-" ;
 eq_op =				"==" | "!=" ;
 comp_op =			"<" | ">" | "<=" | ">=" ;
 
+type =				I32 | F64 | STRING | BOOL
 
-program =			statement* EOF ;
+
+program =			declaration* EOF ;
+
+declaration =		var_declaration | statement ;
+
+var_declaration =	"let" IDENTIFIER ":" type ( "=" expression )? ";" ;
 
 statement =			exprStatement ;
 exprStatement =		expression ";" ;
@@ -19,9 +25,9 @@ comparison =		additive (comp_op additive)* ;
 additive =			multiplicative (add_op multiplicative)* ;
 multiplicative =	unary (mult_op unary)* ;
 unary =				primary | unary_op unary ;
-primary =			literal | grouping ;
+primary =			literal | grouping | IDENTIFIER ;
 grouping =			"(" expression ")" ;
-literal =			INTEGER | FLOAT | STRING | "true" | "false" ;
+literal =			I32 | F64 | STRING | "true" | "false" ;
 
 
 

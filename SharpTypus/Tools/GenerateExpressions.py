@@ -96,7 +96,8 @@ generateExpressions(path, "Expressions", exprImports, "Expr", "IExprVisitor",
         "Binary": {"leftExpr": "Expr", "rightExpr": "Expr", "operator_": "Token" },
         "Unary": {"expr": "Expr", "operator_": "Token"},
 		"Literal": {"token": "Token"},
-		"Grouping": {"expr": "Expr"}, 
+		"Grouping": {"expr": "Expr"},
+		"Variable": {"name": "Token"},
 	}
 )
 
@@ -105,5 +106,6 @@ generateExpressions(path, "Statements", statementsImports,
      "Statement", "IStatementVisitor",
 	{
 		"ExprStatement": {"expr": "Expr"},
+		"LetStatement": {"name": "Token", "initializer": "Expr"},
 	}	
 )

@@ -3,5 +3,6 @@
 namespace SharpTypus.Statements {
 interface IStatementVisitor<T> {
 T Visit(ExprStatement expr);
+T Visit(LetStatement expr);
 }
 }

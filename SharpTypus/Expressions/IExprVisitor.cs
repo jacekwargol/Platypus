@@ -6,5 +6,6 @@ T Visit(Binary expr);
 T Visit(Unary expr);
 T Visit(Literal expr);
 T Visit(Grouping expr);
+T Visit(Variable expr);
 }
 }
