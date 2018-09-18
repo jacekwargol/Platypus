@@ -1,20 +1,26 @@
 ﻿using SharpTypus.Parsing;
 using SharpTypus.Expressions;
+using SharpTypus.Statements;
 using System;
 using System.Globalization;
 using static SharpTypus.Parsing.TokenType;
+using System.Collections.Generic;
 
 namespace SharpTypus.Interpreting {
-    class Interpreter : IExprVisitor<object> {
-        public void Interpret(Expr expr) {
+    class Interpreter : IExprVisitor<object>, IStatementVisitor<object> {
+        public void Interpret(List<Statement> statements) {
             try {
-                Console.WriteLine(Evaluate(expr));
+                foreach(var statement in statements) {
+                    Execute(statement);
+                }
             }
+
             catch(RuntimeException ex) {
                 Platypus.GenerateRuntimeException(ex);
             }
         }
 
+        private void Execute(Statement statement) => statement.Accept(this);
 
         public object Visit(Literal expr) {
             switch(expr.Token.Type) {
@@ -209,6 +215,11 @@ namespace SharpTypus.Interpreting {
             }
 
             return left == null ? false : left.Equals(right);
+        }
+
+        public object Visit(ExprStatement statement) {
+            Evaluate(statement.Expr);
+            return null;
         }
     }
 }

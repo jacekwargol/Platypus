@@ -71,12 +71,11 @@ namespace SharpTypus {
 
             var parser = new Parser(tokens);
             var printer = new AstPrinter();
-            var expr = parser.Parse();
-            var astString = printer.Print(expr);
-            Console.WriteLine(astString);
+            var statements = parser.Parse();
+            printer.Print(statements);
 
             var interpreter = new Interpreter();
-            interpreter.Interpret(expr);
+            interpreter.Interpret(statements);
         }
 
         private static void ReportException(int line, string message) {
