@@ -1,4 +1,4 @@
-﻿namespace SharpTypus.Parsing.Expressions {
+﻿namespace SharpTypus.Expressions {
     abstract class Expr {
         public abstract T Accept<T>(IExprVisitor<T> visitor);
 
