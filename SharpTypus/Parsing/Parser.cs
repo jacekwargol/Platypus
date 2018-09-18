@@ -1,4 +1,5 @@
 ﻿using SharpTypus.Expressions;
+using SharpTypus.Statements;
 using System;
 using System.Collections.Generic;
 using static SharpTypus.Parsing.TokenType;
@@ -10,17 +11,28 @@ namespace SharpTypus.Parsing {
 
         public Parser(List<Token> tokens) => this.tokens = tokens;
 
-        public Expr Parse() {
-            try {
-                return Expression();
+        public List<Statement> Parse() {
+            var statements = new List<Statement>();
+
+            while(!IsAtEnd()) {
+                statements.Add(Statement());
             }
-            catch(ParsingException ex) {
-                return null;
-            }
+
+            return statements;
         }
 
 
         private delegate Expr exprMethod<out Expr>();
+
+        private Statement Statement() {
+            return ExprStatement();
+        }
+
+        private Statement ExprStatement() {
+            var expr = Expression();
+            MatchOrThrowError(Semicolon, "Expected ';' after expression.");
+            return new ExprStatement(expr);
+        }
 
         private Expr Expression() {
             return Equality();
