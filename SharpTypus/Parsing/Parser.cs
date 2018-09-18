@@ -15,7 +15,7 @@ namespace SharpTypus.Parsing {
             var statements = new List<Statement>();
 
             while(!IsAtEnd()) {
-                statements.Add(Statement());
+                statements.Add(Declaration());
             }
 
             return statements;
@@ -24,13 +24,42 @@ namespace SharpTypus.Parsing {
 
         private delegate Expr exprMethod<out Expr>();
 
+        private Statement Declaration() {
+            try {
+                return TryMatchAndAdvance(Let) ? VarDeclaration() : Statement();
+            }
+            catch(ParsingException ex) {
+                Synchronize();
+                return null;
+            }
+        }
+
+        private Statement VarDeclaration() {
+            MatchOrThrowError("Expected variable name.", Identifier);
+
+            var name = Previous();
+
+            MatchOrThrowError("Invalid token.", Colon);
+            MatchOrThrowError("Expected variable type.", I32, F64, False, True, StringToken);
+
+            var type = Previous().Type;
+            Expr initializer = null;
+            if(TryMatch(Equal)) {
+                initializer = Expression();
+            }
+
+            MatchOrThrowError("Expected ';' after cariable declaration.");
+
+            return new LetStatement(name, type, initializer);
+        }
+
         private Statement Statement() {
             return ExprStatement();
         }
 
         private Statement ExprStatement() {
             var expr = Expression();
-            MatchOrThrowError(Semicolon, "Expected ';' after expression.");
+            MatchOrThrowError("Expected ';' after expression.", Semicolon);
             return new ExprStatement(expr);
         }
 
@@ -72,7 +101,7 @@ namespace SharpTypus.Parsing {
 
         private Expr Grouping() {
             var expr = Expression();
-            MatchOrThrowError(RightParen, "Missing ')' after expression.");
+            MatchOrThrowError("Missing ')' after expression.", LeftParen);
             return new Grouping(expr);
         }
 
@@ -116,8 +145,8 @@ namespace SharpTypus.Parsing {
             return false;
         }
 
-        private void MatchOrThrowError(TokenType token, string message) {
-            if(TryMatchAndAdvance(token)) {
+        private void MatchOrThrowError(string message, params TokenType[] tokens) {
+            if(TryMatchAndAdvance(tokens)) {
                 return;
             }
 
@@ -130,7 +159,7 @@ namespace SharpTypus.Parsing {
         }
 
         // Try advancing to the next statement after ecountering parsing error
-        private void Sunchronize() {
+        private void Synchronize() {
             Advance();
 
             while(!IsAtEnd()) {

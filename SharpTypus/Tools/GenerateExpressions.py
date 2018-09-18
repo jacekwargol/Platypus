@@ -106,6 +106,6 @@ generateExpressions(path, "Statements", statementsImports,
      "Statement", "IStatementVisitor",
 	{
 		"ExprStatement": {"expr": "Expr"},
-		"LetStatement": {"name": "Token", "initializer": "Expr"},
+		"LetStatement": {"name": "Token", "type": "TokenType", "initializer": "Expr"},
 	}	
 )
