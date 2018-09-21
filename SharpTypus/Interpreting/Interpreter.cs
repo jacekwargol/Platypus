@@ -1,5 +1,5 @@
 ﻿using SharpTypus.Parsing;
-using SharpTypus.Parsing.Expressions;
+using SharpTypus.Expressions;
 using System;
 using System.Globalization;
 using static SharpTypus.Parsing.TokenType;
@@ -18,14 +18,14 @@ namespace SharpTypus.Interpreting {
 
         public object Visit(Literal expr) {
             switch(expr.Token.Type) {
-                case Integer:
+                case I32:
                     if(Int32.TryParse(expr.Token.Lexeme, out int i)) {
                         return i;
                     }
                     throw new RuntimeException(expr.Token,
                         "Wrong token: " + expr.Token.Line);
 
-                case Float:
+                case F64:
                     if(Double.TryParse(expr.Token.Lexeme, NumberStyles.Any, CultureInfo.InvariantCulture, out double f)) {
                         return f;
                     }
@@ -210,5 +210,7 @@ namespace SharpTypus.Interpreting {
 
             return left == null ? false : left.Equals(right);
         }
+
+        public object Visit(Variable expr) => throw new NotImplementedException();
     }
 }

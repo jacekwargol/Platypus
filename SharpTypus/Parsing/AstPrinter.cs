@@ -1,4 +1,4 @@
-﻿using SharpTypus.Parsing.Expressions;
+﻿using SharpTypus.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,5 +25,6 @@ namespace SharpTypus.Parsing {
         public String Visit(Literal expr) => expr.Token.ToString() + ' ';
 
         public String Visit(Grouping expr) => expr.Expr.Accept(this);
+        public string Visit(Variable expr) => throw new NotImplementedException();
     }
 }
