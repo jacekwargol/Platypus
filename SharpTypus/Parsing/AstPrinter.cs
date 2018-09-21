@@ -1,16 +1,14 @@
-﻿using SharpTypus.Expressions;
-using SharpTypus.Statements;
+﻿using SharpTypus.Parsing.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SharpTypus.Parsing {
-    class AstPrinter : IExprVisitor<String>, IStatementVisitor<object> {
+    class AstPrinter : IExprVisitor<String> {
+
         // Print expression in polish notation
-        public void Print(List<Statement> statements) {
-            foreach(var statement in statements) {
-                Console.WriteLine(statement.Accept(this));
-            }
+        public string Print(Expr expr) {
+            return expr?.Accept(this);
         }
 
         public String Visit(Binary expr) {
@@ -22,12 +20,10 @@ namespace SharpTypus.Parsing {
             return exprSB.ToString();
         }
 
-        public String Visit(Unary expr) => expr.Operator_.Lexeme + ' ' + expr.Expr.Accept(this);
+        public String Visit(Unary expr) => expr.Operator_.ToString() + expr.Expr.Accept(this) + ' ';
 
         public String Visit(Literal expr) => expr.Token.ToString() + ' ';
 
         public String Visit(Grouping expr) => expr.Expr.Accept(this);
-
-        public object Visit(ExprStatement statement) => statement.Expr.Accept(this);
     }
 }
