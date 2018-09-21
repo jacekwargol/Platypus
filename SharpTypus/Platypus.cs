@@ -2,7 +2,7 @@
 using System.IO;
 using SharpTypus.Interpreting;
 using SharpTypus.Parsing;
-using SharpTypus.Parsing.Expressions;
+using SharpTypus.Expressions;
 
 namespace SharpTypus {
     class Platypus {

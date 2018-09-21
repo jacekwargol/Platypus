@@ -1,4 +1,5 @@
-﻿using SharpTypus.Parsing.Expressions;
+﻿using SharpTypus.Expressions;
+using SharpTypus.Statements;
 using System;
 using System.Collections.Generic;
 using static SharpTypus.Parsing.TokenType;
@@ -10,17 +11,57 @@ namespace SharpTypus.Parsing {
 
         public Parser(List<Token> tokens) => this.tokens = tokens;
 
-        public Expr Parse() {
-            try {
-                return Expression();
+        public List<Statement> Parse() {
+            var statements = new List<Statement>();
+
+            while(!IsAtEnd()) {
+                statements.Add(Declaration());
             }
-            catch(ParsingException ex) {
-                return null;
-            }
+
+            return statements;
         }
 
 
         private delegate Expr exprMethod<out Expr>();
+
+        private Statement Declaration() {
+            try {
+                return TryMatchAndAdvance(Let) ? VarDeclaration() : Statement();
+            }
+            catch(ParsingException ex) {
+                Synchronize();
+                return null;
+            }
+        }
+
+        private Statement VarDeclaration() {
+            MatchOrThrowError("Expected variable name.", Identifier);
+
+            var name = Previous();
+
+            MatchOrThrowError("Invalid token.", Colon);
+            MatchOrThrowError("Expected variable type.", I32, F64, False, True, StringToken);
+
+            var type = Previous().Type;
+            Expr initializer = null;
+            if(TryMatch(Equal)) {
+                initializer = Expression();
+            }
+
+            MatchOrThrowError("Expected ';' after variable declaration.", Semicolon);
+
+            return new LetStatement(name, type, initializer);
+        }
+
+        private Statement Statement() {
+            return ExprStatement();
+        }
+
+        private Statement ExprStatement() {
+            var expr = Expression();
+            MatchOrThrowError("Expected ';' after expression.", Semicolon);
+            return new ExprStatement(expr);
+        }
 
         private Expr Expression() {
             return Equality();
@@ -46,8 +87,8 @@ namespace SharpTypus.Parsing {
             if(!TryMatchAndAdvance(Bang, Minus)) {
                 return Primary();
             }
-
-            return new Unary(Unary(), Previous());
+            var op = Previous();
+            return new Unary(Unary(), op);
         }
 
         private Expr Primary() {
@@ -60,12 +101,12 @@ namespace SharpTypus.Parsing {
 
         private Expr Grouping() {
             var expr = Expression();
-            MatchOrThrowError(RightParen, "Missing ')' after expression.");
+            MatchOrThrowError("Missing ')' after expression.", LeftParen);
             return new Grouping(expr);
         }
 
         private Expr Literal() {
-            if(TryMatch(Integer, Float, StringToken, True, False)) {
+            if(TryMatch(I32, F64, StringToken, True, False)) {
                 return new Literal(Advance());
             }
 
@@ -104,8 +145,8 @@ namespace SharpTypus.Parsing {
             return false;
         }
 
-        private void MatchOrThrowError(TokenType token, string message) {
-            if(TryMatchAndAdvance(token)) {
+        private void MatchOrThrowError(string message, params TokenType[] tokens) {
+            if(TryMatchAndAdvance(tokens)) {
                 return;
             }
 
@@ -118,7 +159,7 @@ namespace SharpTypus.Parsing {
         }
 
         // Try advancing to the next statement after ecountering parsing error
-        private void Sunchronize() {
+        private void Synchronize() {
             Advance();
 
             while(!IsAtEnd()) {
